@@ -31,7 +31,7 @@ public class Dr  implements Serializable{
 	public String toString() {
 		return "Dr [drId=" + drId + ", drBrand=" + drBrand + ", drSeries=" + drSeries + ", drPrice=" + drPrice
 				+ ", drSales=" + drSales + ", drSize=" + drSize + ", drNumber=" + drNumber
-				+ ", drWeight=" + drWeight + ", drWeight=" + drWeight + ", drCleanliness=" + drCleanliness
+				+ ", drWeight=" + drWeight + ",  drCleanliness=" + drCleanliness
 				+ ", drColor=" + drColor + ", drCutting=" + drCutting + ", drMaterial=" + drMaterial
 				+ ", DRFirstPicture=" + DRFirstPicture + ", DRDescription=" + DRDescription + ", imgs=" + imgs + ", DRExtension="
 				+ DRExtension + "]";
@@ -50,13 +50,13 @@ public class Dr  implements Serializable{
 	private String drMaterial;	//����
 	private String DRFirstPicture;//��ͼ
 	private String DRDescription;	//����
-	private boolean DRExtension;	//�Ƿ��ƹ�
+	private int DRExtension;	//�Ƿ��ƹ�
 	
 	private  Set<DrImage>  imgs;
 	
 	public Dr(int drId, String drBrand, String drSeries, float drPrice, int drSales, String drSize, int drNumber,
 			String drWeight, String drCleanliness, String drColor, String drCutting, String drMaterial,
-			String dRFirstPicture, String dRDescription, boolean dRExtension, Set<DrImage> imgs) {
+			String dRFirstPicture, String dRDescription, int dRExtension, Set<DrImage> imgs) {
 		super();
 		this.drId = drId;
 		this.drBrand = drBrand;
@@ -195,11 +195,11 @@ public class Dr  implements Serializable{
 		DRDescription = dRDescription;
 	}
 
-	public boolean isDRExtension() {
+	public int getDRExtension() {
 		return DRExtension;
 	}
 
-	public void setDRExtension(boolean dRExtension) {
+	public void setDRExtension(int dRExtension) {
 		DRExtension = dRExtension;
 	}
 

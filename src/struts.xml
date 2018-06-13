@@ -22,12 +22,15 @@
 		</package>
 		
 		
-		<package name="car" extends="struts-default"  namespace="/admin">
+		<package name="dr" extends="struts-default">
 				<default-action-ref name="default"></default-action-ref>
 				<action name="default">
 					<result>/404.jsp</result>
 				</action>
-				<action name="CarAction" class="com.oracle.strutsdemo.action.DrAction">
+				<action name="DrAction" class="com.oracle.strutsdemo.action.DrAction">
+					<result name="searchDr">/DrSearchMessage.jsp</result>
+					<result name="list">/allDrs.jsp</result>
+					
 				</action>
 				
 				<action name="OrderAction" class="com.oracle.strutsdemo.action.OrderAction">
