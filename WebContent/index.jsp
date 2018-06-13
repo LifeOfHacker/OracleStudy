@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="css/demo.css">
-	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>                                      
 	<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="js/canvas.js"></script>
 </head>
@@ -51,13 +51,13 @@
 							</li>
 						</ul>
 					</li>
-					<li  data-options="state:'closed'">
+					<li  data-options="state:'opened'">
 						<span>商品管理</span>
 						<ul>
 							<li>所有商品</li>
-							<li>添加商品</li>
-							<li>修改商品</li>
-							<li>删除商品</li>
+							
+							<li>查找商品</li>
+							
 						</ul>
 					</li>
 					<li  data-options="state:'closed'">
@@ -189,7 +189,9 @@
 					if(node.text=='所有用户'){
 						addPanel(node.text,'allUsers.jsp');
 					}else if(node.text=='所有商品'){
-						addPanel(node.text,'allCars.jsp');
+						addPanel(node.text,'allDrs.jsp');
+					}else if(node.text=='查找商品'){
+						addPanel(node.text,'DrSearchMessage.jsp');
 					}else if(node.text=='所有活动'){
 						addPanel(node.text,'ActiveAction!SearchActive.action');
 					}

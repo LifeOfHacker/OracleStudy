@@ -7,7 +7,21 @@ import com.oracle.strutsdemo.model.bean.Dr;
 import com.oracle.strutsdemo.model.bean.DrImage;
 
 public interface DrDao  extends BaseDAO{
+
+	public ArrayList<Dr> SearchDr(String pinpai,String price, String minshuliang,String maxshuliang, String chundu);
+	
+	public ArrayList<Dr> listDr();
 	/**
+	 * 根据id删除dr
+	 * **/
+	public boolean deleteDr(int drid);
+	/**
+	 * 添加Dr
+	 * **/
+	public boolean addDr(Dr d);
+	//根据id修改信息
+	public boolean updateDr(int id,Dr d);
+ 	/**
 	 * 设计一个可以根据用户传入的数量查询显示出最近发布的钻戒信息
 	 */
 	public ArrayList<Dr>  listRecentDrsByCount(int count);
@@ -49,7 +63,7 @@ public interface DrDao  extends BaseDAO{
 	 * 分页查询钻戒信息的方法
 	 * @param page   传入的页面
 	 * @param count  传入的每页查看多少条数据
-	 * @return   返回这一页的count条车辆信息
+	 * @return   返回这一页的count条信息
 	 */
 	public ArrayList<Dr>  listDrByPage(int page,int count);
 	

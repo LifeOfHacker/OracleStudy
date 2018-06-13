@@ -62,11 +62,27 @@ public class DrDAOImp extends BaseDAOImp  implements DrDao {
 	/**
 	 * 用于lists页面的分页功能
 	 */
+	
 	public ArrayList<Dr> listDrByPage(int page, int count) {
 		System.out.println(count+" ok2");
 		drs=new  ArrayList<Dr>();
 		try {
 			rs = getSta().executeQuery("select *  from  drmessage  limit " + (page-1)*count + " , " + count + "");
+			while (rs.next()) {
+				c=parsetResultToDr(rs);
+				drs.add(c);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(drs.size());
+		disposeResource(null, rs);
+		return drs;
+	}
+	public ArrayList<Dr> listDr() {
+		drs=new  ArrayList<Dr>();
+		try {
+			rs = getSta().executeQuery("select *  from  drmessage");
 			while (rs.next()) {
 				c=parsetResultToDr(rs);
 				drs.add(c);
@@ -284,10 +300,110 @@ public class DrDAOImp extends BaseDAOImp  implements DrDao {
 			c.setDrMaterial(rs.getString("drMaterial"));	//材质
 			c.setDRFirstPicture(rs.getString("DRFirstPicture"));	//首图
 			c.setDRDescription(rs.getString("DRDescription"));		//描述
-			c.setDRExtension(rs.getBoolean("DRExtension"));		//推广
+			c.setDRExtension(rs.getInt("DRExtension"));		//推广
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return c;
 	}
+
+	@Override
+	public boolean deleteDr(int drid) {
+		Statement sta=getSta();
+		int count;
+		boolean result=false;
+		try {
+			count=sta.executeUpdate("delete from drmessage where drid="+drid+"");
+			result=(count>0)?true:false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return result;
+	}
+/**
+ * 添加信息的方法
+ */
+	@Override
+	public boolean addDr(Dr d) {
+		Statement sta=getSta();
+		int count;
+		boolean result=false;
+		try {
+			count=sta.executeUpdate("INSERT INTO DRMESSAGE VALUES("+d.getDrId()
+			+",'"+d.getDrBrand()+"','"+d.getDrSeries()+"','"+d.getDrPrice()
+			+"','"+d.getDrSales()+"','"+d.getDrSize()+"','"+d.getDrNumber()
+			+"','"+d.getDrWeight()+"','"+d.getDrCleanliness()+"','"+d.getDrColor()
+			+"','"+d.getDrCutting()+"','"+d.getDrMaterial()+"','"+d.getDRFirstPicture()
+			+"','"+d.getDRDescription()+"',"+d.getDRExtension()+")");
+			result=(count>0)?true:false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return result;
+	}
+
+	@Override
+	public boolean updateDr(int id, Dr d) {
+		Statement sta=getSta();
+		int count;
+		boolean result=false;
+		try {
+			count=sta.executeUpdate("update drmessage set drbrand='"+d.getDrBrand()
+			+"',drseries='"+d.getDrSeries()
+			+"',drprice='"+d.getDrPrice()
+			+"',drsales='"+d.getDrSales()
+			+"',drsize='"+d.getDrSize()
+			+"',drnumber'"+d.getDrNumber()
+			+"',drweight'"+d.getDrWeight()
+			+"',drcleanliness'"+d.getDrCleanliness()
+			+"',drcolor'"+d.getDrColor()
+			+"',drcutting'"+d.getDrCutting()
+			+"',drmaterial'"+d.getDrMaterial()
+			+"',drfirstpicture'"+d.getDRFirstPicture()
+			+"',drdescription'"+d.getDRDescription()
+			+"',drextension'"+d.getDRExtension()
+			+"','");
+			result=(count>0)?true:false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return result;
+	}
+	
+	
+	
+	@Override
+	public ArrayList<Dr> SearchDr(String pinpai,String price, String minshuliang,String maxshuliang, String chundu) {
+		String SQL = "select *  from  DRMESSAGE  where  1=1";
+		if (pinpai != null && !pinpai.equals("")) {
+			SQL += "   and  drbrand='" + pinpai + "'";
+		}
+		if (price != null && !price.equals("")) {
+			SQL += "   and  drPrice>=" + price;
+		}
+		if (minshuliang != null && !minshuliang.equals("")) {
+			SQL += "   and  drnumber>=" + Integer.parseInt(minshuliang);
+		}
+		if (maxshuliang != null && !maxshuliang.equals("")) {
+			SQL += "   and  drnumber<=" + Integer.parseInt(maxshuliang);
+		}
+		if (chundu != null && !chundu.equals("")) {
+			SQL += "   and  drmaterial like '%" + chundu+"%'";
+		}
+		ArrayList<Dr> drs = new ArrayList<Dr>();
+		ResultSet rs = null;
+		try {
+			rs = getSta().executeQuery(SQL);
+			while (rs.next()) {
+				drs.add(parsetResultToDr(rs));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return drs;
+	}
+
 }
