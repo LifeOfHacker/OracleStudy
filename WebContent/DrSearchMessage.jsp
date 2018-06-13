@@ -109,10 +109,22 @@
 					},{
 						iconCls:'icon-edit',
 						handler:function(){
-							$("#w").panel({'title':'编辑信息','width':400,'height':400});
-							$("#w").html('<iframe scrolling="auto" frameborder="0"  src="editDr.jsp" style="width:100%;height:100%;"></iframe>');
-							$("#w").window("open");
-						}
+							var n=$("#dg").datagrid('getSelected');
+							var i=$('#dg').datagrid('getRowIndex', $("#dg").datagrid('getSelected'));
+							if(n==null){
+								$.messager.alert('温馨提示','必须选中要修改的行才能修改!','error');
+							}else{
+								$.messager.confirm('确认信息', '确认修改编号为:'+n.Drid+'的信息吗?', function(r){
+									if (r){
+										//$.get("DrAction!updateDr.action?drid="+n.Drid,function(data){});
+										$("#w").panel({'title':'修改信息','width':400,'height':400});
+										$("#w").html('<form id="fff" class="easyui-form" action="DrAction!updateDr.action" method="post" data-options="novalidate:true"><table></table>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:<input value="'+n.Drid+'" class="easyui-textbox" name="bianhao" data-options="required:false" style="width: 120px;height: 20px;"><br/>	品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌:<input value="'+n.pinpai+'" class="easyui-textbox" name="pinpai" data-options="required:false" style="width: 120px;height: 20px;"><br/>	系&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;列:<input value="'+n.xilie+'" class="easyui-textbox" name="xilie" data-options="required:false" style="width: 120px;height: 20px;"><br/> 商品数量:<input value="'+n.shuliang+'" class="easyui-textbox" name="shuliang" data-options="required:false" style="width: 120px;height: 20px;"><br/>	商品价格:<input value="'+n.jiage+'" class="easyui-textbox" name="jiage" data-options="required:false" style="width: 120px;height: 20px;"><br/>	尺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;寸:<input value="'+n.chicun+'" class="easyui-textbox" name="chicun" data-options="required:false" style="width: 120px;height: 20px;"><br/>	纯&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;度:<input value="'+n.chundu+'" class="easyui-textbox" name="chundu" data-options="required:false" style="width: 120px;height: 20px;"><br/>	颜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色:<input value="'+n.yanse+'" class="easyui-textbox" name="yanse" data-options="required:false" style="width: 120px;height: 20px;"><br/>	切&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工:<input value="'+n.qiegong+'" class="easyui-textbox" name="qiegong" data-options="required:false" style="width: 120px;height: 20px;"><br/>	材&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;质:<input value="'+n.caizhi+'" class="easyui-textbox" name="caizhi" data-options="required:false" style="width: 120px;height: 20px;"><br/></form><input  type="submit" value="修改" />');
+										$("#w").window("open");
+										
+									}
+								});							
+							}
+						}			
 					},{
 						iconCls:'icon-remove',
 						handler:function(){
