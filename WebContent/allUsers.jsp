@@ -13,8 +13,8 @@
 	<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 </head>
 <body style="margin: 0px;padding: 5px;">
-	<table id="dg" title="用户列表" style="width:100%;height:400px;margin: 0px;"
-			data-options="rownumbers:true,singleSelect:true,pagination:true,url:'admin/UserAction!listUserByPage.action',method:'get'">
+	<table class="easyui-datagrid"  style="width:100%;height:300px;margin: 5px;"
+			data-options="singleSelect:true,collapsible:true,url:'admin/UserAction!listUserByPage.action?rows=5&page=2',method:'get'">
 		<thead>
 			<tr>
 				<th data-options="field:'userid',width:80,align:'left'">用户编号</th>

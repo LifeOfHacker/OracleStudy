@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 
 public abstract class BaseDAOImp implements  BaseDAO {
-	private Connection con;
+	private Connection con;  
 	private Statement sta;
 	private PreparedStatement  preSta;
 	private CallableStatement  callSta;

@@ -1,4 +1,5 @@
 /com/
 /struts.xml
+/struts_active.xml
 /struts_product.xml
 /struts_user.xml

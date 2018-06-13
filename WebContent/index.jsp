@@ -3,6 +3,7 @@
 <html>
 <head>
 <base  href="${pageContext.request.scheme }://${pageContext.request.serverName}:${pageContext.request.serverPort}/DRManager/">
+
 	<meta charset="UTF-8">
 	<title>DR商城后台管理系统-首页</title>
 	<link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
@@ -72,9 +73,6 @@
 						<span>商城活动</span>
 						<ul>
 							<li>所有活动</li>
-							<li>添加活动</li>
-							<li>修改活动</li>
-							<li>删除活动</li>
 						</ul>
 					</li>
 					<li data-options="state:'closed'">
@@ -194,6 +192,8 @@
 						addPanel(node.text,'allDrs.jsp');
 					}else if(node.text=='查找商品'){
 						addPanel(node.text,'DrSearchMessage.jsp');
+					}else if(node.text=='所有活动'){
+						addPanel(node.text,'ActiveAction!SearchActive.action');
 					}
 				}
 			});

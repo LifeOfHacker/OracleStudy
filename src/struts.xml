@@ -5,6 +5,7 @@
 	<struts>
 		<include file="struts_user.xml"></include>
 		<include file="struts_product.xml"></include>
+		<include file="struts_active.xml"></include>
 		
 		<!-- 配置字符集 -->
 		<constant name="struts.DevMode" value="true"></constant>
@@ -36,4 +37,7 @@
 				<action name="OrderAction" class="com.oracle.strutsdemo.action.OrderAction">
 				</action>
 		</package>
+		
+		
+		
 	</struts>
