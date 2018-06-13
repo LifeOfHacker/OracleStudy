@@ -13,26 +13,25 @@
 </head>
 <body>
 	<div style="margin:20px 0;"></div>
-	<div data-options="rownumbers:true,singleSelect:true,pagination:true,url:'admin/UserAction!searchUserInfoById.action',method:'get'" class="easyui-panel" title="修改用户" style="width:100%;max-width:500px;padding:30px 60px;">
-		<form id="adduser" method="post" action="admin/UserAction!addUserInfo.action" enctype="multipart/form-data">
+	<div  class="easyui-panel" title="修改用户" style="width:100%;max-width:500px;padding:30px 60px;">
+		<form id="adduser" method="post" action="admin/UserAction!updateUserInfo.action" enctype="multipart/form-data">
 			<div style="margin-bottom:20px">
-			
 				<input value="${userid}" class="easyui-textbox" name="u.userid" style="width:100%" data-options="label:'用户编号:',required:true">
 			</div>
 			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="u.shouJiHao" style="width:100%" data-options="label:'手机号:',required:true">
+				<input value="${shouJiHao}" class="easyui-textbox" name="u.shouJiHao" style="width:100%" data-options="label:'手机号:',required:true">
 			</div>
 			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="u.password" style="width:100%" data-options="label:'密码:',required:true">
+				<input value="${password}" class="easyui-textbox" name="u.password" style="width:100%" data-options="label:'密码:',required:true">
 			</div>
 				<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="u.youXiang" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
+				<input value="${youXiang}" class="easyui-textbox" name="u.youXiang" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
 			</div>
 			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="u.niCheng" style="width:100%" data-options="label:'昵称:',required:true">
+				<input value="${niCheng}" class="easyui-textbox" name="u.niCheng" style="width:100%" data-options="label:'昵称:',required:true">
 			</div>
 			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="u.zhenShiXingMing" style="width:100%" data-options="label:'真实姓名:',required:true">
+				<input value="${zhenShiXingMing}" class="easyui-textbox" name="u.zhenShiXingMing" style="width:100%" data-options="label:'真实姓名:',required:true">
 			</div>
 			<div style="margin-bottom:20px"> 
              <span style="margin-right:30px">性&nbsp;&nbsp;别：</span> 
@@ -51,19 +50,20 @@
              <span style="margin-right:30px">地&nbsp;&nbsp;区：</span> 
              <select name="u.sheng" id="province"> <option value="-1">请选择省份</option> <option value="安徽省">安徽省</option><option value="北京市">北京市</option><option value="福建省">福建省</option><option value="甘肃省">甘肃省</option><option value="广东省">广东省</option><option value="广西壮族自治区">广西壮族自治区</option><option value="贵州省">贵州省</option><option value="海南省">海南省</option><option value="河北省">河北省</option><option value="河南省">河南省</option><option value="黑龙江省">黑龙江省</option><option value="湖北省">湖北省</option><option value="湖南省">湖南省</option><option value="吉林省">吉林省</option><option value="江苏省">江苏省</option><option value="江西省">江西省</option><option value="辽宁省">辽宁省</option><option value="150000">内蒙古自治区</option><option value="640000">宁夏回族自治区</option><option value="青海省">青海省</option><option value="山东省">山东省</option><option value="山西省">山西省</option><option value="陕西省">陕西省</option><option value="上海市">上海市</option><option value="四川省">四川省</option><option value="天津市">天津市</option><option value="西藏自治区">西藏自治区</option><option value="650000">新疆维吾尔自治区</option><option value="云南省">云南省</option><option value="浙江省">浙江省</option><option value="500000">重庆市</option></select> 
               <span>城市：</span> 
-             <input name="u.shi" type="text" value="" style="height: 20px;width: 80px;" id="postcode" />  
+             <input value="${shi}" name="u.shi" type="text" style="height: 20px;width: 80px;" id="postcode" />  
             </div> 
 			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="u.xiangXiDiZhi" style="width:100%;height:60px" data-options="label:'详细地址:',multiline:true">
+				<input value="${xiangXiDiZhi}" class="easyui-textbox" name="u.xiangXiDiZhi" style="width:100%;height:60px" data-options="label:'详细地址:',multiline:true">
 			</div>
 			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="u.youBian" style="width:100%" data-options="label:'邮编:',required:true">
+				<input value="${youBian}" class="easyui-textbox" name="u.youBian" style="width:100%" data-options="label:'邮编:',required:true">
 			</div>
 			<div style="margin-bottom:20px">
-				<input class="easyui-textbox" name="u.zuoJi" style="width:100%" data-options="label:'座机:',required:true">
+				<input value="${zuoJi}" class="easyui-textbox" name="u.zuoJi" style="width:100%" data-options="label:'座机:',required:true">
 			</div>
 			<div> 
             <span id="addimage" style="margin-right:85px">头像：</span>
+            <a> <img name="touxiang" width="90" height="90" src="${touxiang}" /> </a> 
             <input style="margin-left:130px" type="file"  name="headImg"/>
             </div>
 		</form>

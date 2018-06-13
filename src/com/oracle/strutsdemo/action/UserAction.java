@@ -11,6 +11,7 @@ import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
@@ -180,7 +181,7 @@ public class UserAction implements RequestAware{
                 FileUtils.copyFile(headImg, new File(filePath, fileName));
                 //2、设置用户头像路径
                 System.out.println(fileName);
-                user.setTouXiang("images/uploadFiles" + fileName);		
+                user.setTouXiang("images/uploadFiles/" + fileName);		
         }
     } catch (Exception e) {
         // TODO Auto-generated catch block
@@ -203,6 +204,61 @@ public class UserAction implements RequestAware{
 		user.setZuoJi(this.u.getZuoJi());
 		System.out.println(this.u.getZuoJi());
 		boolean result=dao.adduser(user);
+		if(result) {
+			//ServletActionContext.getRequest().getSession().setAttribute("shoujihao", u);
+			System.out.println("成功");
+		}else
+		{
+			System.out.println("失败");
+		}
+	}
+	/**
+	 * 更新用户
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public void updateUserInfo(){
+		System.out.println("进入了");
+		System.out.println(headImg);
+		User user=new User();
+		try {
+            System.out.println(headImg);
+            //处理头像
+           if(headImg != null){
+                //1.保存头像到upload/user
+                //获取保存路径的绝对地址
+                String filePath = ServletActionContext.getServletContext().getRealPath("/images/uploadFiles");
+                System.out.println(filePath);
+                String fileName = UUID.randomUUID().toString().replaceAll("-", "")+headImgFileName.substring(headImgFileName.lastIndexOf("."));
+                //复制文件
+                FileUtils.copyFile(headImg, new File(filePath, fileName));
+                //2、设置用户头像路径
+                System.out.println(fileName);
+                user.setTouXiang("images/uploadFiles/" + fileName);		
+        }
+    } catch (Exception e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+		user.setUserid(this.u.getUserid());//用户编号
+		user.setShouJiHao(this.u.getShouJiHao());
+		user.setPassword(this.u.getPassword());
+		user.setYouXiang(this.u.getYouXiang());
+		user.setNiCheng(this.u.getNiCheng());
+		user.setZhenShiXingMing(this.u.getZhenShiXingMing());
+		user.setXingBie(this.u.getXingBie());
+		user.setNian(this.u.getNian());
+		user.setYue(this.u.getYue());
+		user.setRi(this.u.getRi());
+		user.setSheng(this.u.getSheng());
+		user.setShi(this.u.getShi());
+		user.setXiangXiDiZhi(this.u.getXiangXiDiZhi());
+		user.setYouBian(this.u.getYouBian());
+		user.setZuoJi(this.u.getZuoJi());
+		System.out.println(this.u.getZuoJi());
+		boolean result=dao.updateuser(user);
 		if(result) {
 			//ServletActionContext.getRequest().getSession().setAttribute("shoujihao", u);
 			System.out.println("成功");
@@ -238,10 +294,26 @@ public class UserAction implements RequestAware{
 	 */
 	public void searchUserInfoById() {
 		response.setContentType("text/html;charset=utf-8");
-		User n=dao.getUserInfoByUserId(userid);
 		System.out.println(userid);
-		ServletActionContext.getRequest().setAttribute("userid",userid);
-		ServletActionContext.getRequest().getSession().setAttribute("shoujihao", n);
+		User n=dao.getUserInfoByUserId(userid);
+		//System.out.println(n.getNian());
+		HttpSession session=ServletActionContext.getRequest().getSession();
+		session.setAttribute("userid",userid);
+		session.setAttribute("shouJiHao", n.getShouJiHao());
+		session.setAttribute("password", n.getPassword());
+		session.setAttribute("youXiang", n.getYouXiang());
+		session.setAttribute("niCheng", n.getNiCheng());
+		session.setAttribute("zhenShiXingMing", n.getZhenShiXingMing());
+		session.setAttribute("shi", n.getShi());
+		session.setAttribute("xiangXiDiZhi", n.getXiangXiDiZhi());
+		session.setAttribute("youBian", n.getYouBian());
+		session.setAttribute("zuoJi", n.getZuoJi());
+		session.setAttribute("nian", n.getNian());
+		session.setAttribute("yue", n.getYue());
+		session.setAttribute("ri", n.getRi());
+		session.setAttribute("sheng", n.getSheng());
+		session.setAttribute("touxiang", n.getTouXiang());
+		session.setAttribute("sex", n.getXingBie());
 	}
 	@Override
 	public void setRequest(Map<String, Object> arg0) {
