@@ -3,40 +3,47 @@ package com.oracle.strutsdemo.dao;
 import com.oracle.strutsdemo.model.bean.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.oracle.strutsdemo.model.bean.User;
+
 
 public class UserDAOImp extends BaseDAOImp implements UserDAO {
 	private User u=null;	
-
-	//用户注册
-	public boolean add(Object o) {
-		User user=(User)o;
-		if(user.getShouJiHao()!=null) {
-			return mobile_reg(user);
-		}
-		if(user.getYouXiang()!=null) {
-			return email_reg(user);
-		}
-		System.out.println("没有获取到注册用户信息，userdaoimp");
-		return false;
-	}
 
 	@Override
 	public boolean delete(Object id) {
 		return false;
 	}
-
+	/**
+	 * 删除用户
+	 */
 	@Override
-	public boolean update(Object o) {
+	public boolean deleteUser(int userid) {
+		Statement sta=getSta();
+		int count;
+		boolean result=false;
+		try {
+			count=sta.executeUpdate("delete from usermessage where userid="+userid+"");
+			result=(count>0)?true:false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return result;
+	}
+	/**
+	 * 增加用户
+	 */
+	@Override
+	public boolean adduser(Object o) {
 		User user=(User)o;
 		PreparedStatement  sta=null;
 		boolean result=false;
 		try {
-			sta=getPreSta("update usermessage set touxiang=? ,youxiang=? ,nicheng=?,zhenshixingming=?,xingbie=?,chusheng_nian=?,chusheng_yue=?,chusheng_ri=?,diqu_sheng=?,diqu_shi=?,diqu_xian=?,xiangxidizhi=?,youbian=?,shoujihao=?,zuoji=? where userid=?");
-			sta.setString(1, user.getTouXiang());
+			sta=getPreSta("insert into usermessage(userid,youxiang,nicheng,zhenshixingming,xingbie,chusheng_nian,chusheng_yue,chusheng_ri,diqu_sheng,diqu_shi,xiangxidizhi,youbian,shoujihao,zuoji,password,touxiang) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			sta.setInt(1, user.getUserid());
 			sta.setString(2, user.getYouXiang());
 			sta.setString(3, user.getNiCheng());
 			sta.setString(4, user.getZhenShiXingMing());
@@ -46,12 +53,12 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 			sta.setInt(8, user.getRi());
 			sta.setString(9, user.getSheng());
 			sta.setString(10, user.getShi());
-			sta.setString(11, user.getXian());
-			sta.setString(12, user.getXiangXiDiZhi());
-			sta.setInt(13, user.getYouBian());
-			sta.setString(14, user.getShouJiHao());
-			sta.setLong(15, user.getZuoJi());		
-			sta.setInt(16, user.getUserid());
+			sta.setString(11, user.getXiangXiDiZhi());
+			sta.setInt(12, user.getYouBian());
+			sta.setString(13, user.getShouJiHao());
+			sta.setString(14, user.getZuoJi());	
+			sta.setString(15, user.getPassword());
+			sta.setString(16,user.getTouXiang());
 			int count=sta.executeUpdate();
 			result=(count>0)?true:false;		
 		} catch (Exception e) {
@@ -59,11 +66,10 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 		}
 		return result;
 	}
-
-	@Override
-	public Object list() {
-		return null;
-	}
+	
+	/**
+	 * 管理员登录
+	 */
 
 	@Override
 	public User login(String shouJiHao, String password) {
@@ -87,38 +93,7 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 		disposeResource(sta, rs);
 		return u;
 	}
-	/**
-	 * 手机号注册
-	 * @param username
-	 * @param password
-	 * @return
-	 */
-	public boolean mobile_reg(User u) {
-		boolean result=false;
-		try {
-			int count=getSta().executeUpdate("insert into  usermessage(userid,shoujihao,password) values (null,'"+u.getShouJiHao()+"','"+u.getPassword()+"')");
-			result=(count>0)?true:false;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	/**
-	 * 邮箱注册
-	 * @param username
-	 * @param password
-	 * @return
-	 */
-	public boolean email_reg(User u) {
-		boolean result=false;
-		try {
-			int count=getSta().executeUpdate("insert into  usermessage(userid,youxiang,password) values (null,'"+u.getYouXiang()+"','"+u.getPassword()+"')");
-			result=(count>0)?true:false;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
+	
 	/*
 	 * 作为一个工具类，供其他类调用
 	 * 这个方法用来处理查询数据库后的结果集
@@ -142,7 +117,7 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 			u.setXiangXiDiZhi(rs.getString("XIANGXIDIZHI"));
 			u.setYouBian(rs.getInt("YOUBIAN"));
 			u.setShouJiHao(rs.getString("SHOUJIHAO"));
-			u.setZuoJi(rs.getLong("ZUOJI"));
+			u.setZuoJi(rs.getString("ZUOJI"));
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -155,15 +130,11 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 		PreparedStatement  sta=null;
 		ResultSet rs=null;
 		try {
-			  sta=getPreSta("select *  from usermessage where userid=?");
+			sta=getPreSta("select *  from usermessage where userid=?");
 			sta.setInt(1, userid);
 			rs=sta.executeQuery();
-			if(rs.next()) {
-				user=new User();
-				user.setUserid(rs.getInt("userid"));
-				user.setShouJiHao(rs.getString("shouJiHao"));
-				user.setPassword(rs.getString("password"));
-				if(rs.getString("image")!=null)
+			while(rs.next()) {
+				if(rs.getInt("USERID")!=0)
 				{
 					u=new User();
 					u.setUserid(rs.getInt("USERID"));
@@ -182,7 +153,7 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 					u.setXiangXiDiZhi(rs.getString("XIANGXIDIZHI"));
 					u.setYouBian(rs.getInt("YOUBIAN"));
 					u.setShouJiHao(rs.getString("SHOUJIHAO"));
-					u.setZuoJi(rs.getLong("ZUOJI"));
+					u.setZuoJi(rs.getString("ZUOJI"));
 				}
 			}
 		} catch (Exception e) {
@@ -208,23 +179,21 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 		disposeResource(sta, rs);
 		return result;
 	}
-
+	/**
+	 * 分页显示用户
+	 */
 	@Override
 	public ArrayList<User> listUserByPage(int count, int page) {
 		ArrayList<User>  users=new ArrayList<>();
 		PreparedStatement  sta=null;
 		ResultSet rs=null;
 		try {
-			  sta=getPreSta("select *  from usermessage order by userid desc limit  ?,?");
+			  sta=getPreSta("select *  from usermessage order by userid  limit  ?,?");
 			sta.setInt(1, (page-1)*count);
 			sta.setInt(2, count);
 			rs=sta.executeQuery();
 			while(rs.next()) {
-				User  user=new User();
-				user.setUserid(rs.getInt("userid"));
-				user.setShouJiHao(rs.getString("shouJiHao"));
-				user.setPassword(rs.getString("password"));
-				if(rs.getString("image")!=null)
+				if(rs.getInt("USERID")!=0)
 				{
 					u=new User();
 					u.setUserid(rs.getInt("USERID"));
@@ -243,9 +212,11 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 					u.setXiangXiDiZhi(rs.getString("XIANGXIDIZHI"));
 					u.setYouBian(rs.getInt("YOUBIAN"));
 					u.setShouJiHao(rs.getString("SHOUJIHAO"));
-					u.setZuoJi(rs.getLong("ZUOJI"));
+					u.setZuoJi(rs.getString("ZUOJI"));
+					
 				}
-				users.add(user);
+		
+				users.add(u);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -269,6 +240,17 @@ public class UserDAOImp extends BaseDAOImp implements UserDAO {
 		}
 		disposeResource(sta, rs);
 		return count;
+	}
+
+	@Override
+	public boolean add(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public Object list() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

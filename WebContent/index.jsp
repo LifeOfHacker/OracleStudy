@@ -187,10 +187,13 @@
 			
 			$('#menutree').tree({
 				onClick: function(node){
-					
 					if(node.text=='所有用户'){
 						addPanel(node.text,'allUsers.jsp');
-					}else if(node.text=='所有商品'){
+					}else if(node.text=='添加用户'){
+						addPanel(node.text,'addUser.jsp');
+					}else if(node.text=='删除用户'){
+						addPanel(node.text,'allCars.jsp');
+					}else if(node.text=='修改用户'){
 						addPanel(node.text,'allCars.jsp');
 					}
 				}

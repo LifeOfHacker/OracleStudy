@@ -19,8 +19,8 @@ public class User    implements Serializable{
 	private String xian;			//县
 	private String xiangXiDiZhi;	//详细地址
 	private int youBian;			//邮编
-	private String shouJiHao;			//手机号
-	private long zuoJi;				//座机
+	private String shouJiHao;		//手机号
+	private String zuoJi;				//座机
 	public int getUserid() {
 		return userid;
 	}
@@ -117,15 +117,15 @@ public class User    implements Serializable{
 	public void setShouJiHao(String shouJiHao) {
 		this.shouJiHao = shouJiHao;
 	}
-	public long getZuoJi() {
+	public String getZuoJi() {
 		return zuoJi;
 	}
-	public void setZuoJi(long zuoJi) {
+	public void setZuoJi(String zuoJi) {
 		this.zuoJi = zuoJi;
 	}
 	public User(int userid, String password, String touXiang, String youXiang, String niCheng,
 			String zhenShiXingMing, String xingBie, int nian, int yue, int ri, String sheng, String shi, String xian,
-			String xiangXiDiZhi, int youBian, String shouJiHao, long zuoJi) {
+			String xiangXiDiZhi, int youBian, String shouJiHao, String zuoJi) {
 		super();
 		this.userid = userid;
 		this.password = password;
