@@ -13,7 +13,14 @@ import com.oracle.strutsdemo.util.Responser;
 
 public class DrAction {
 	private Dr  dr;
+	private ArrayList<Dr> drs;
 	
+	public ArrayList<Dr> getDrs() {
+		return drs;
+	}
+	public void setDrs(ArrayList<Dr> drs) {
+		this.drs = drs;
+	}
 	public Dr getDr() {
 		return dr;
 	}
@@ -42,7 +49,7 @@ public class DrAction {
 	 * 分页显示查询戒指信息的方法
 	 */
 	public void listCarsByPage() {
-		ArrayList<Dr> drs=dao.listDrByPage(page, rows);
+		drs=dao.listDrByPage(page, rows);
 		JSONArray  js=new JSONArray();
 		for(Dr c:drs) {
 			try {
@@ -88,4 +95,41 @@ public class DrAction {
 		}
 		
 	}
+	
+	
+	/**
+	 * 分页显示推广钻戒信息的方法
+	 */
+	public void listExtensionDrsByPage() {
+		System.out.println("进推广信息的方法了");
+		drs=dao.getAllDrByTuiguangByPage(page, rows);
+		JSONArray  js=new JSONArray();
+		for(Dr d:drs) {
+			try {
+				JSONObject  j=new JSONObject();
+				j.put("drId", d.getDrId());
+				j.put("DRFirstPicture", "<img src='"+d.getDRFirstPicture()+"'  style='width:20px;height:20px'/>");
+				j.put("drBrand", d.getDrBrand());
+				j.put("drSeries", d.getDrSeries());
+				j.put("drWeight", d.getDrWeight());
+				j.put("drColor", d.getDrColor());
+				j.put("drPrice", d.getDrPrice());
+				j.put("drSales", d.getDrSales());
+				js.put(j);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		//System.out.println(js.toString());
+		try {
+			Responser.responseToJson(ServletActionContext.getResponse(), ServletActionContext.getRequest(), js.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 这里是添加推送商品的方法
+	 */
 }

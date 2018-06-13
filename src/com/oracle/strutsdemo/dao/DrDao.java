@@ -16,7 +16,7 @@ public interface DrDao  extends BaseDAO{
 	/**
 	 * 定义一个查询需要推广显示到滚动区域钻戒信息的方法
 	 */
-	public  ArrayList<Dr>  getAllDrByTuiguang();
+	public  ArrayList<Dr>  getAllDrByTuiguangByPage(int page,int count);
 	
 	/**
 	 * 

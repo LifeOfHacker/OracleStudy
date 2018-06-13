@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 public class CodeAction {
-	HttpServletRequest request=ServletActionContext.getRequest();
+	 HttpServletRequest request=ServletActionContext.getRequest();
 	 HttpServletResponse response=ServletActionContext.getResponse();
 	 private String code;
 	 

@@ -108,4 +108,7 @@ public class UserAction implements RequestAware{
 		this.request=arg0;
 	}
 
+//	public void wxx() {
+//		System.out.println("000");
+//	}
 }

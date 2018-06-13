@@ -59,13 +59,21 @@
 							<li>删除商品</li>
 						</ul>
 					</li>
-					<li  data-options="state:'closed'">
+					<li>
 						<span>商品推广</span>
 						<ul>
-							<li>所有推送</li>
-							<li>添加推送</li>
-							<li>修改推送</li>
-							<li>删除推送</li>
+							<li>
+								<span>所有推送</span>
+							</li>
+							<li>
+								<span>添加推送</span>
+							</li>
+							<li>
+								<span>修改推送</span>
+							</li>
+							<li>
+								<span>删除推送</span>
+							</li>
 						</ul>
 					</li>
 					<li  data-options="state:'closed'">
@@ -192,10 +200,15 @@
 						addPanel(node.text,'allUsers.jsp');
 					}else if(node.text=='所有商品'){
 						addPanel(node.text,'allCars.jsp');
+					}else if(node.text=='所有推送'){
+						addPanel(node.text,'allExtends.jsp');
+					}else if(node.text=='添加推送'){
+						addPanel(node.text,'addExtends.jsp');
 					}
 				}
 			});
 		})
+		
 	</script>
 	
 	<!-- 添加信选项卡的js -->

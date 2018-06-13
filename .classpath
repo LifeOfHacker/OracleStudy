@@ -25,6 +25,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/struts2-core-2.3.34.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xwork-core-2.3.34.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.46-bin.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javaee.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

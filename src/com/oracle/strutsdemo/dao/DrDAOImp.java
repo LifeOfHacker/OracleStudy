@@ -15,7 +15,7 @@ import com.oracle.strutsdemo.model.bean.DrImage;
 public class DrDAOImp extends BaseDAOImp  implements DrDao {
 	private ArrayList<Dr>  drs=null;//定义一个集合存储查询出来的所有钻戒信息
 	private ResultSet rs=null;
-	private Dr  c=null;
+	private Dr  d=null;
 	
 	//pageBean_sql作为全局变量，存储有附加条件搜索之后的查询语句，用于统计count(drId),确定搜索的最大钻戒数量
 	private String pageBean_sql="select count(drId)  from  drmessage  where  1=1";	
@@ -50,8 +50,8 @@ public class DrDAOImp extends BaseDAOImp  implements DrDao {
 			rs=getSta().executeQuery("select *  from  drmessage order by  drid ASC  limit "+count);
 			while(rs.next())
 			{
-				c=parsetResultToDr(rs);
-				drs.add(c);		//添加到集合中
+				d=parsetResultToDr(rs);
+				drs.add(d);		//添加到集合中
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,8 +68,8 @@ public class DrDAOImp extends BaseDAOImp  implements DrDao {
 		try {
 			rs = getSta().executeQuery("select *  from  drmessage  limit " + (page-1)*count + " , " + count + "");
 			while (rs.next()) {
-				c=parsetResultToDr(rs);
-				drs.add(c);
+				d=parsetResultToDr(rs);
+				drs.add(d);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,16 +94,18 @@ public class DrDAOImp extends BaseDAOImp  implements DrDao {
 		disposeResource(null, rs);
 		return n;
 	}
+	
+	
 
-	//是否推广
-	public ArrayList<Dr> getAllDrByTuiguang() {
+	//需要推广的商品分页显示
+	public ArrayList<Dr> getAllDrByTuiguangByPage(int page,int count) {
 		drs=new  ArrayList<Dr>();
 		try {
-			rs=getSta().executeQuery("select *  from  drmessage   where  DRExtension=1");
+			rs=getSta().executeQuery("select *  from  drmessage   where  DRExtension=1  limit  "+(page-1)*count+","+count);
 			while(rs.next())
 			{
-				c=parsetResultToDr(rs);
-				drs.add(c);
+				d=parsetResultToDr(rs);
+				drs.add(d);
 			}
 			System.out.println(drs.size());
 		} catch (Exception e) {
@@ -120,13 +122,13 @@ public class DrDAOImp extends BaseDAOImp  implements DrDao {
 			rs=getSta().executeQuery("select *  from  drmessage  where drid="+drId);
 			if(rs.next())
 			{
-				c=parsetResultToDr(rs);	
+				d=parsetResultToDr(rs);	
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		disposeResource(null, rs);
-		return  c;
+		return  d;
 	}
 
 	public Set<DrImage> getDrImagesByDrId(int drId) {
@@ -210,8 +212,8 @@ public class DrDAOImp extends BaseDAOImp  implements DrDao {
 			rs=getSta().executeQuery(SQL);
 			while(rs.next())
 			{
-				c=parsetResultToDr(rs);	
-				drs.add(c);
+				d=parsetResultToDr(rs);	
+				drs.add(d);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -269,25 +271,29 @@ public class DrDAOImp extends BaseDAOImp  implements DrDao {
 	 */
 	public Dr parsetResultToDr(ResultSet rs) {
 		try {
-			c = new Dr();
-			c.setDrId(rs.getInt("drId"));				//ID
-			c.setDrBrand(rs.getString("drBrand"));		//品牌
-			c.setDrSeries(rs.getString("drSeries"));	//系列
-			c.setDrPrice(rs.getFloat("drPrice"));		//售价
-			c.setDrSales(rs.getInt("drSales"));			//销量
-			c.setDrSize(rs.getString("drSize"));		//尺寸
-			c.setDrNumber(rs.getInt("drNumber"));		//数量
-			c.setDrWeight(rs.getString("drWeight"));	//总重量
-			c.setDrCleanliness(rs.getString("drCleanliness"));	//净度
-			c.setDrColor(rs.getString("drColor"));		//颜色
-			c.setDrCutting(rs.getString("drCutting"));	//切工
-			c.setDrMaterial(rs.getString("drMaterial"));	//材质
-			c.setDRFirstPicture(rs.getString("DRFirstPicture"));	//首图
-			c.setDRDescription(rs.getString("DRDescription"));		//描述
-			c.setDRExtension(rs.getBoolean("DRExtension"));		//推广
+			d = new Dr();
+			d.setDrId(rs.getInt("drId"));				//ID
+			d.setDrBrand(rs.getString("drBrand"));		//品牌
+			d.setDrSeries(rs.getString("drSeries"));	//系列
+			d.setDrPrice(rs.getFloat("drPrice"));		//售价
+			d.setDrSales(rs.getInt("drSales"));			//销量
+			d.setDrSize(rs.getString("drSize"));		//尺寸
+			d.setDrNumber(rs.getInt("drNumber"));		//数量
+			d.setDrWeight(rs.getString("drWeight"));	//总重量
+			d.setDrCleanliness(rs.getString("drCleanliness"));	//净度
+			d.setDrColor(rs.getString("drColor"));		//颜色
+			d.setDrCutting(rs.getString("drCutting"));	//切工
+			d.setDrMaterial(rs.getString("drMaterial"));	//材质
+			d.setDRFirstPicture(rs.getString("DRFirstPicture"));	//首图
+			d.setDRDescription(rs.getString("DRDescription"));		//描述
+			d.setDRExtension(rs.getBoolean("DRExtension"));		//推广
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return c;
+		return d;
 	}
+
+
+	
+	
 }
